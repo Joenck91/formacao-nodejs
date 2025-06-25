@@ -118,25 +118,26 @@ async function playRaceEngine(character1, character2) {
         character2.PODER
       );
 
-      if (powerResult1 > powerResult2 && character2.PONTOS > 0) {
-        console.log(
-          `${character1.NOME} venceu o confronto! ${character2.NOME} perdeu 1 ponto 🐢`
-        );
-        character2.PONTOS--;
+      
+
+      if (powerResult1 > powerResult2) {
+        if(character2.PONTOS == 0){
+          console.log(`${character1.NOME} venceu o confronto! Mas ${character2.NOME} ja está com pontos zerados.`);
+        }else{
+          console.log(`${character1.NOME} venceu o confronto! ${character2.NOME} perdeu 1 ponto 🐢`);
+          character2.PONTOS--;
+        }
       }
 
-      if (powerResult2 > powerResult1 && character1.PONTOS > 0) {
-        console.log(
-          `${character2.NOME} venceu o confronto! ${character1.NOME} perdeu 1 ponto 🐢`
-        );
-        character1.PONTOS--;
+      if (powerResult2 > powerResult1) {
+        if(character1.PONTOS == 0){
+          console.log(`${character2.NOME} venceu o confronto! Mas ${character1.NOME} ja está com pontos zerados.`);
+        }else{
+          console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} perdeu 1 ponto 🐢`);
+          character1.PONTOS--;
+        }
+      }else { console.log(powerResult2 === powerResult1 ? "Confronto empatado! Nenhum ponto foi perdido" : "");
       }
-
-      console.log(
-        powerResult2 === powerResult1
-          ? "Confronto empatado! Nenhum ponto foi perdido"
-          : ""
-      );
     }
 
     // verificando o vencedor
@@ -146,9 +147,13 @@ async function playRaceEngine(character1, character2) {
     } else if (totalTestSkill2 > totalTestSkill1) {
       console.log(`${character2.NOME} marcou um ponto!`);
       character2.PONTOS++;
-    }
+    }else if(totalTestSkill1 === totalTestSkill2 && block != "CONFRONTO"){
+       console.log('A rodada terminou em empate. Ninguem marcou ponto.');
+    };
 
-    console.log("-----------------------------");
+    //Placar
+    console.log(`Placar: ${character1.NOME} ${character1.PONTOS} vs ${character2.PONTOS} ${character2.NOME}`)
+    console.log("---------------------------------------------------------------------\n");
   }
 }
 //Declara o ganhador do jogo

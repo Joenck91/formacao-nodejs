@@ -13,11 +13,11 @@ const player2 = {
   PODER: 4,
   PONTOS: 0,
 };
-
+//Rolar dados
 async function rollDice() {
   return Math.floor(Math.random() * 6) + 1;
 }
-
+//Sortear tipo de rodada. Sorteia entre 'reta', 'curva' ou 'confronto'
 async function getRandomBlock() {
   let random = Math.random();
   let result;
@@ -35,7 +35,7 @@ async function getRandomBlock() {
 
   return result;
 }
-
+//Mostra o resultado do lançamento dos dados
 async function logRollResult(characterName, block, diceResult, attribute) {
   console.log(
     `${characterName} 🎲 rolou um dado de ${block} ${diceResult} + ${attribute} = ${
@@ -43,7 +43,7 @@ async function logRollResult(characterName, block, diceResult, attribute) {
     }`
   );
 }
-
+//Mecanismo do jogo.
 async function playRaceEngine(character1, character2) {
   for (let round = 1; round <= 5; round++) {
     console.log(`🏁 Rodada ${round}`);
@@ -151,7 +151,7 @@ async function playRaceEngine(character1, character2) {
     console.log("-----------------------------");
   }
 }
-
+//Declara o ganhador do jogo
 async function declareWinner(character1, character2) {
   console.log("Resultado final:");
   console.log(`${character1.NOME}: ${character1.PONTOS} ponto(s)`);
@@ -163,7 +163,7 @@ async function declareWinner(character1, character2) {
     console.log(`\n${character2.NOME} venceu a corrida! Parabéns! 🏆`);
   else console.log("A corrida terminou em empate");
 }
-
+//Função principal que roda sozinha e faz o jogo rodar.
 (async function main() {
   console.log(
     `🏁🚨 Corrida entre ${player1.NOME} e ${player2.NOME} começando...\n`

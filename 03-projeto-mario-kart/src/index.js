@@ -3,7 +3,7 @@ const player1 = {
   VELOCIDADE: 4,
   MANOBRABILIDADE: 3,
   PODER: 3,
-  PONTOS: 100,
+  PONTOS: 0,
 };
 
 const player2 = {
@@ -11,7 +11,7 @@ const player2 = {
   VELOCIDADE: 3,
   MANOBRABILIDADE: 4,
   PODER: 4,
-  PONTOS: 100,
+  PONTOS: 0,
 };
 //Rolar dados
 async function rollDice() {
@@ -57,11 +57,8 @@ async function playRaceEngine(character1, character2) {
   for (let round = 1; round <= 5; round++) {
     console.log(`🏁 Rodada ${round}`);
 
-    //Placar
-    console.log(`Placar: ${character1.NOME} ${character1.PONTOS} vs ${character2.PONTOS} ${character2.NOME}`);
-
     // sortear bloco
-    let block = /*await getRandomBlock();*/ "CONFRONTO"
+    let block = await getRandomBlock();
     console.log(`Bloco: ${block}`);
 
     // rolar os dados

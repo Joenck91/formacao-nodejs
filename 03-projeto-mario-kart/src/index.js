@@ -133,22 +133,28 @@ async function playRaceEngine(character1, character2) {
 
       if (powerResult1 > powerResult2) {
         if(character2.PONTOS == 0){
-          console.log(`${character1.NOME} venceu o confronto! Mas ${character2.NOME} ja está com pontos zerados.`);
+          console.log(`${character1.NOME} venceu o confronto e ganhou um "Turbo"! Mas ${character2.NOME} ja está com pontos zerados.`);
+          character1.PONTOS += 1;
         }else if(weapon === "BOMBA"){
-          console.log(`${character1.NOME} venceu o confronto! ${character2.NOME} recebeu uma ${weapon}🔥 e perdeu 2 pontos.`);
+          console.log(`${character1.NOME} venceu o confronto e ganhou um "Turbo"! ${character2.NOME} recebeu uma ${weapon}🔥 e perdeu 2 pontos.`);
+          character1.PONTOS += 1;
           character2.PONTOS = Math.max(0, character2.PONTOS - 2);
         }else{
-          console.log(`${character1.NOME} venceu o confronto! ${character2.NOME} recebeu uma ${weapon} 🐢 e perdeu 1 ponto.`);
+          console.log(`${character1.NOME} venceu o confronto e ganhou um "Turbo"! ${character2.NOME} recebeu uma ${weapon} 🐢 e perdeu 1 ponto.`);
+          character1.PONTOS += 1;
           character2.PONTOS--;
         }
       }else if (powerResult2 > powerResult1) {
         if(character1.PONTOS == 0){
-          console.log(`${character2.NOME} venceu o confronto! Mas ${character1.NOME} ja está com pontos zerados.`);
+          console.log(`${character2.NOME} venceu o confronto e ganhou um "Turbo"! Mas ${character1.NOME} ja está com pontos zerados.`);
+          character2.PONTOS += 1;
         }else if(weapon === "BOMBA"){
-            console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} recebeu uma ${weapon}🔥 e perdeu 2 pontos.`);
+            console.log(`${character2.NOME} venceu o confronto e ganhou um "Turbo"! ${character1.NOME} recebeu uma ${weapon}🔥 e perdeu 2 pontos.`);
+            character2.PONTOS += 1;
             character1.PONTOS -= 2;
         }else{
-          console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} recebeu uma ${weapon} 🐢 e perdeu 1 ponto.`);
+          console.log(`${character2.NOME} venceu o confronto e ganhou um "Turbo"! ${character1.NOME} recebeu uma ${weapon} 🐢 e perdeu 1 ponto.`);
+          character2.PONTOS += 1;
           character1.PONTOS--;
         }
       }else { console.log("Confronto empatado! Nenhum ponto foi perdido");

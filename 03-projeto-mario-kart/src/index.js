@@ -3,7 +3,7 @@ const player1 = {
   VELOCIDADE: 4,
   MANOBRABILIDADE: 3,
   PODER: 3,
-  PONTOS: 0,
+  PONTOS: 100,
 };
 
 const player2 = {
@@ -11,7 +11,7 @@ const player2 = {
   VELOCIDADE: 3,
   MANOBRABILIDADE: 4,
   PODER: 4,
-  PONTOS: 0,
+  PONTOS: 100,
 };
 //Rolar dados
 async function rollDice() {
@@ -43,13 +43,25 @@ async function logRollResult(characterName, block, diceResult, attribute) {
     }`
   );
 }
+//Sorteira qual arma será usada. 1=casco e 2=bomba
+function weaponDefine (){
+  if(Math.floor(Math.random()*2)+1 == 1){
+    return "CASCA DE TARTARUGA";
+  }else{
+    return "BOMBA";
+  }
+}
+
 //Mecanismo do jogo.
 async function playRaceEngine(character1, character2) {
   for (let round = 1; round <= 5; round++) {
     console.log(`🏁 Rodada ${round}`);
 
+    //Placar
+    console.log(`Placar: ${character1.NOME} ${character1.PONTOS} vs ${character2.PONTOS} ${character2.NOME}`);
+
     // sortear bloco
-    let block = await getRandomBlock();
+    let block = /*await getRandomBlock();*/ "CONFRONTO"
     console.log(`Bloco: ${block}`);
 
     // rolar os dados
@@ -101,8 +113,10 @@ async function playRaceEngine(character1, character2) {
     if (block === "CONFRONTO") {
       let powerResult1 = diceResult1 + character1.PODER;
       let powerResult2 = diceResult2 + character2.PODER;
+      let weapon = weaponDefine();
 
       console.log(`${character1.NOME} confrontou com ${character2.NOME}! 🥊`);
+      console.log(`Arma escolhida foi ${weapon}`)
 
       await logRollResult(
         character1.NOME,
@@ -123,20 +137,24 @@ async function playRaceEngine(character1, character2) {
       if (powerResult1 > powerResult2) {
         if(character2.PONTOS == 0){
           console.log(`${character1.NOME} venceu o confronto! Mas ${character2.NOME} ja está com pontos zerados.`);
+        }else if(weapon === "BOMBA"){
+          console.log(`${character1.NOME} venceu o confronto! ${character2.NOME} recebeu uma ${weapon}🔥 e perdeu 2 pontos.`);
+          character2.PONTOS = Math.max(0, character2.PONTOS - 2);
         }else{
-          console.log(`${character1.NOME} venceu o confronto! ${character2.NOME} perdeu 1 ponto 🐢`);
+          console.log(`${character1.NOME} venceu o confronto! ${character2.NOME} recebeu uma ${weapon} 🐢 e perdeu 1 ponto.`);
           character2.PONTOS--;
         }
-      }
-
-      if (powerResult2 > powerResult1) {
+      }else if (powerResult2 > powerResult1) {
         if(character1.PONTOS == 0){
           console.log(`${character2.NOME} venceu o confronto! Mas ${character1.NOME} ja está com pontos zerados.`);
+        }else if(weapon === "BOMBA"){
+            console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} recebeu uma ${weapon}🔥 e perdeu 2 pontos.`);
+            character1.PONTOS -= 2;
         }else{
-          console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} perdeu 1 ponto 🐢`);
+          console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} recebeu uma ${weapon} 🐢 e perdeu 1 ponto.`);
           character1.PONTOS--;
         }
-      }else { console.log(powerResult2 === powerResult1 ? "Confronto empatado! Nenhum ponto foi perdido" : "");
+      }else { console.log("Confronto empatado! Nenhum ponto foi perdido");
       }
     }
 
@@ -152,7 +170,7 @@ async function playRaceEngine(character1, character2) {
     };
 
     //Placar
-    console.log(`Placar: ${character1.NOME} ${character1.PONTOS} vs ${character2.PONTOS} ${character2.NOME}`)
+    console.log(`Placar: ${character1.NOME} ${character1.PONTOS} vs ${character2.PONTOS} ${character2.NOME}`);
     console.log("---------------------------------------------------------------------\n");
   }
 }

@@ -1,18 +1,59 @@
-const player1 = {
+//Serão dois jogadores por rodada
+let player1 = "";
+let player2 = "";
+//Lista de jogadores
+const players = [{
   NOME: "Mario",
   VELOCIDADE: 4,
   MANOBRABILIDADE: 3,
   PODER: 3,
-  PONTOS: 0,
-};
-
-const player2 = {
+  PONTOS: 0
+},{
   NOME: "Luigi",
   VELOCIDADE: 3,
   MANOBRABILIDADE: 4,
   PODER: 4,
   PONTOS: 0,
-};
+},{
+  NOME: "Peach",
+  VELOCIDADE: 3,
+  MANOBRABILIDADE: 4,
+  PODER: 2,
+  PONTOS: 0
+},{
+  NOME: "Yoshi",
+  VELOCIDADE: 2,
+  MANOBRABILIDADE: 4,
+  PODER: 3,
+  PONTOS: 0
+
+},{
+  NOME: "Bowser",
+  VELOCIDADE: 5,
+  MANOBRABILIDADE: 2,
+  PODER: 5,
+  PONTOS: 0
+},{
+  NOME: "Donkey Kong",
+  VELOCIDADE: 2,
+  MANOBRABILIDADE: 2,
+  PODER: 5,
+  PONTOS: 0
+
+}];
+//Função que sorteia os jogadores.
+function definePlayers(list, amount) {
+  const newList = [...list];
+  const newPlayers = [];
+
+  for(let i = 0; i<amount && newList.length; i++){
+    const index = Math.floor(Math.random()*newList.length);
+    newPlayers.push(newList.splice(index, 1)[0]);
+  }
+  player1 = newPlayers[0];
+  player2 = newPlayers[1];
+  console.log("texto")
+} 
 //Rolar dados
 async function rollDice() {
   return Math.floor(Math.random() * 6) + 1;
@@ -51,8 +92,7 @@ function weaponDefine (){
     return "BOMBA";
   }
 }
-
-//Mecanismo do jogo.
+//Mecanismo do jogo..
 async function playRaceEngine(character1, character2) {
   for (let round = 1; round <= 5; round++) {
     console.log(`🏁 Rodada ${round}`);
@@ -191,10 +231,11 @@ async function declareWinner(character1, character2) {
 }
 //Função principal que roda sozinha e faz o jogo rodar.
 (async function main() {
+  
+  await definePlayers(players, 2);
   console.log(
     `🏁🚨 Corrida entre ${player1.NOME} e ${player2.NOME} começando...\n`
   );
-
   await playRaceEngine(player1, player2);
   await declareWinner(player1, player2);
 })();

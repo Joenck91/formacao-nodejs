@@ -8,10 +8,10 @@ async function addItem(userCart, item) {
 
 // ✅ -> calcular o total do carrinho
 async function calculateTotal(userCart) {
-  console.log("\nShopee Cart TOTAL IS:");
+  console.log("Shopee Cart TOTAL IS:");
 
   const result = userCart.reduce((total, item) => total + item.subtotal(), 0);
-  console.log(`🎁Total: ${result}`);
+  console.log(`🎁Total: ${result}\n`);
 }
 
 // -> deletar item do carrinho
@@ -21,6 +21,7 @@ async function deleteItem(userCart, name) {
   if (index !== -1) {
     userCart.splice(index, 1);
   }
+  console.log(`Item ${name} deletado com sucesso!\n`);
 }
 
 // -> ✅ remover um item - diminui um item
@@ -30,26 +31,28 @@ async function removeItem(userCart, item) {
 
   //2. Caso não encontre o item
   if (indexFound == -1) {
-    console.log("item não encontrado");
+    console.log("item não encontrado\n");
     return;
   }
 
   //3. item > 1 subtrair um item
   if (userCart[indexFound].quantity > 1) {
     userCart[indexFound].quantity -= 1;
+    console.log(`Item ${userCart[indexFound].name} alterado com sucesso!\n`);
     return;
   }
 
   //4. caso item = 1 deletar o item
   if (userCart[indexFound].quantity == 1) {
     userCart.splice(indexFound, 1);
+    console.log(`Item ${item.name} removido com sucesso!\n`);
     return;
   }
 }
 
 // ✅ mostra todos os items do carrinho
 async function displaycart(userCart) {
-  console.log("\nShopee cart list:");
+  console.log("Shopee cart list:");
   userCart.forEach((item, index) => {
     console.log(
       `${index + 1}. ${item.name} - R$ ${item.price} | ${
@@ -57,6 +60,21 @@ async function displaycart(userCart) {
       }x | Subtotal = ${item.subtotal()}`
     );
   });
+  console.log("\n")
 }
 
-export { addItem, calculateTotal, deleteItem, removeItem, displaycart };
+async function displayWishList(userWishList) {
+  console.log("Shopee wish list:");
+  userWishList.forEach((item, index) => {
+    console.log(
+      `${index + 1}. ${item.name} - R$ ${item.price} | ${item.quantity}x`
+    );
+    return;
+  });
+  console.log("\n");
+  if (userWishList.length === 0) {
+    console.log("Your wish list is empty!\n");
+  }
+  return userWishList;
+};
+export { addItem, calculateTotal, deleteItem, removeItem, displaycart, displayWishList };
